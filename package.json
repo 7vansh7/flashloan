@@ -1,0 +1,15 @@
+{
+  "name": "flash_loan_arbitrage_bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@mrgnlabs/marginfi-client-v2": "^5.0.0",
+    "@mrgnlabs/mrgn-common": "^2.0.1",
+    "@solana/web3.js": "1.98.0",
+    "@solendprotocol/solend-sdk": "0.13.35",
+    "axios": "^1.7.9",
+    "bn.js": "^5.2.1",
+    "bs58": "^6.0.0"
+  }
+}
