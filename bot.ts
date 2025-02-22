@@ -17,14 +17,17 @@ import {
 import { ComputeBudgetProgram } from "@solana/web3.js";
 import bs58 from "bs58";
 import { getAssociatedTokenAddress } from "@solana/spl-token";
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 // const connection = new Connection("https://api.mainnet-beta.solana.com");
 const connection = new Connection("https://capable-icy-telescope.solana-mainnet.quiknode.pro/5ad7778c25bcc2c2ab1a8c8fe5b6d8a306414c0c");
 // const connection = new Connection("https://api.devnet.solana.com")
 const solanaTokenMint = new PublicKey("So11111111111111111111111111111111111111112") 
 const walletPublicKey = new PublicKey("2BxKw4qJkZPUVLwXseYFHMxyD5nTd3ntdoys1VXUvVnR")
 // const keypairPath = "./wallet-keypair.json";
-const private_key = "4eDSRFaKFui8cfKYqfcsP71zqpoPSfpawrTPvxkggXgbPKFmPEmg5G4QxkvCqYhgTNCKMb5tqGsqYrtUNkzwcLR";
-const wallet = Keypair.fromSecretKey(bs58.decode(private_key));
+const private_key = process.env.PRIVATE_KEY;
+const wallet = Keypair.fromSecretKey(bs58.decode(private_key!));
 console.log(wallet.publicKey.toBase58());
 const main_func = async ()=>{
     const tokenAccountAddress = await getAssociatedTokenAddress(

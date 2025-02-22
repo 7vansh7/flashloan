@@ -17,33 +17,33 @@ const client = await MarginfiClient.fetch(config, wallet, connection);
 const marginfiAccount = await client.createMarginfiAccount();
 // const ix = client.makeCreateMarginfiAccountIx(wallet.publicKey)
 // const transaction = new Transaction().add(computeBudgetIx, ix)
-//   const marginfiAccounts = await client.getMarginfiAccountsForAuthority();
-//   if (marginfiAccounts.length === 0) throw Error("No marginfi account found");
-//   const check = marginfiAccount.isFlashLoanEnabled
-//   console.log(check)
+  const marginfiAccounts = await client.getMarginfiAccountsForAuthority();
+  if (marginfiAccounts.length === 0) throw Error("No marginfi account found");
+  const check = marginfiAccount.isFlashLoanEnabled
+  console.log(check)
 //   const marginfiAccount = marginfiAccounts[0];
 
 
-//   const solBank = client.getBankByTokenSymbol("SOL");
-//   if (!solBank) throw Error("SOL bank not found");
-// //   await marginfiAccount.deposit(1, solBank.address);
-// //   await marginfiAccount.reload();
+  const solBank = client.getBankByTokenSymbol("SOL");
+  if (!solBank) throw Error("SOL bank not found");
+//   await marginfiAccount.deposit(1, solBank.address);
+//   await marginfiAccount.reload();
 
-//   const amount = 10; // SOL
+  const amount = 10; // SOL
 
-//   const borrowIx = await marginfiAccount.makeBorrowIx(amount, solBank.address);
-//   const repayIx = await marginfiAccount.makeRepayIx(amount, solBank.address, true);
-//   const computeBudgetIx = ComputeBudgetProgram.setComputeUnitPrice({
-//     microLamports: 100000,
-//   });
+  const borrowIx = await marginfiAccount.makeBorrowIx(amount, solBank.address);
+  const repayIx = await marginfiAccount.makeRepayIx(amount, solBank.address, true);
+  const computeBudgetIx = ComputeBudgetProgram.setComputeUnitPrice({
+    microLamports: 100000,
+  });
 
-//   const flashLoanTx = await marginfiAccount.buildFlashLoanTx({
-//     ixs: [...borrowIx.instructions, ...repayIx.instructions,computeBudgetIx],
-//     signers: [wallet.payer]
-//   });
+  const flashLoanTx = await marginfiAccount.buildFlashLoanTx({
+    ixs: [...borrowIx.instructions, ...repayIx.instructions,computeBudgetIx],
+    signers: [wallet.payer]
+  });
 
 
-//   await client.processTransaction(flashLoanTx);
+  await client.processTransaction(flashLoanTx);
 }
 
 main().catch((e) => console.log(e));
