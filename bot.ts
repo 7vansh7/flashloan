@@ -17,25 +17,31 @@ import {
 import { ComputeBudgetProgram } from "@solana/web3.js";
 import bs58 from "bs58";
 import { getAssociatedTokenAddress } from "@solana/spl-token";
-import * as dotenv from 'dotenv';
+import * as dotenv from "dotenv";
 dotenv.config();
 
 // const connection = new Connection("https://api.mainnet-beta.solana.com");
-const connection = new Connection("https://capable-icy-telescope.solana-mainnet.quiknode.pro/5ad7778c25bcc2c2ab1a8c8fe5b6d8a306414c0c");
+const connection = new Connection(
+  "https://capable-icy-telescope.solana-mainnet.quiknode.pro/5ad7778c25bcc2c2ab1a8c8fe5b6d8a306414c0c"
+);
 // const connection = new Connection("https://api.devnet.solana.com")
-const solanaTokenMint = new PublicKey("So11111111111111111111111111111111111111112") 
-const walletPublicKey = new PublicKey("2BxKw4qJkZPUVLwXseYFHMxyD5nTd3ntdoys1VXUvVnR")
+const solanaTokenMint = new PublicKey(
+  "So11111111111111111111111111111111111111112"
+);
+const walletPublicKey = new PublicKey(
+  "2BxKw4qJkZPUVLwXseYFHMxyD5nTd3ntdoys1VXUvVnR"
+);
 // const keypairPath = "./wallet-keypair.json";
 const private_key = process.env.PRIVATE_KEY;
 const wallet = Keypair.fromSecretKey(bs58.decode(private_key!));
 console.log(wallet.publicKey.toBase58());
-const main_func = async ()=>{
-    const tokenAccountAddress = await getAssociatedTokenAddress(
-        solanaTokenMint,
-         walletPublicKey
-       )
-    return(tokenAccountAddress)
-}
+const main_func = async () => {
+  const tokenAccountAddress = await getAssociatedTokenAddress(
+    solanaTokenMint,
+    walletPublicKey
+  );
+  return tokenAccountAddress;
+};
 const liquidityAmount = new BN(1000000000);
 // const tokenAccount = main_func()
 const lendingMarket = new PublicKey(
@@ -44,7 +50,6 @@ const lendingMarket = new PublicKey(
 const sourceLiquidity = new PublicKey(
   "4AaWCgiCBLkEruE3m3Ms6emhBs62zLCoqotby4iuhmTD"
 );
-
 
 const reserve = new PublicKey("BTQJkUKAMcx3ppM9Qvwck3TCb64vw7b1a2nYmEsKfFWo");
 const reserveLiquidityFeeReceiver = new PublicKey(
@@ -80,21 +85,21 @@ async function flashLoan() {
     lendingMarket,
     wallet.publicKey,
     SOLEND_PRODUCTION_PROGRAM_ID
-  )
-//   const flashRepay = flashRepayReserveLiquidityInstruction(
-//     liquidityAmount,
-//     1,
-//     sourceLiquidity,
-//     new PublicKey("6i7V6Wy3TqW2JB9e684KEkh9TTWa4dKKTJtz7N4Geven"),
-//     // sourceLiquidity,
-//     reserveLiquidityFeeReceiver,
-//     // reserveLiquidityFeeReceiver,
-//     new PublicKey("6i7V6Wy3TqW2JB9e684KEkh9TTWa4dKKTJtz7N4Geven"),
-//     reserve,
-//     lendingMarket,
-//     wallet.publicKey,
-//     SOLEND_DEVNET_PROGRAM_ID
-//   );
+  );
+  //   const flashRepay = flashRepayReserveLiquidityInstruction(
+  //     liquidityAmount,
+  //     1,
+  //     sourceLiquidity,
+  //     new PublicKey("6i7V6Wy3TqW2JB9e684KEkh9TTWa4dKKTJtz7N4Geven"),
+  //     // sourceLiquidity,
+  //     reserveLiquidityFeeReceiver,
+  //     // reserveLiquidityFeeReceiver,
+  //     new PublicKey("6i7V6Wy3TqW2JB9e684KEkh9TTWa4dKKTJtz7N4Geven"),
+  //     reserve,
+  //     lendingMarket,
+  //     wallet.publicKey,
+  //     SOLEND_DEVNET_PROGRAM_ID
+  //   );
 
   try {
     const message = new TransactionMessage({
@@ -123,13 +128,13 @@ async function flashLoan() {
     });
 
     const txHash = await connection.sendTransaction(tx);
-    console.log("⏳ Waiting for confirmation...")
-    await connection.confirmTransaction(txHash, 'processed');
+    console.log("⏳ Waiting for confirmation...");
+    await connection.confirmTransaction(txHash, "processed");
 
     console.log(
       "Transaction sent successfully with hash:",
       `https://solscan.io/tx/${signature}`
-    )
+    );
   } catch (error) {
     if (error instanceof SendTransactionError) {
       console.error("Transaction Error:", {
@@ -144,5 +149,5 @@ async function flashLoan() {
   }
 }
 
-flashLoan()
+flashLoan();
 // console.log(SOLEND_PRODUCTION_PROGRAM_ID)
